@@ -1,10 +1,12 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 import random
 from .models import Student,Marks,Department,Student_Id
 from django.db.models import Q,Sum
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
+@csrf_exempt
 def get_student(request):
     try:
         studentQuery = Student.objects.all()
@@ -24,7 +26,7 @@ def get_student(request):
 
     return HttpResponse("No pages Found")
 
-
+@csrf_exempt
 def get_marks(request,s_id):
     try:
         queryMarks = Marks.objects.filter(student_name__stu_id__student_id = s_id)
@@ -41,7 +43,7 @@ def get_marks(request,s_id):
         print(e)
     return HttpResponse("No Page Found")
 
-
+@csrf_exempt
 def enlist_student(request):
     try:
         queryDept = Department.objects.all()
@@ -72,7 +74,7 @@ def enlist_student(request):
 
     return HttpResponse("Student Not added")
 
-
+@csrf_exempt
 def enlist_dept(request):
     try:
         if(request.method=="POST"):
@@ -90,5 +92,30 @@ def enlist_dept(request):
 
     return HttpResponse("Deparment Not Added")
 
-def delete_dept(request):
-    pass
+
+@csrf_exempt
+def delete_dept(request,dept_code):
+    try:
+        if(request.method=="DELETE"):
+            Department.objects.filter(code = dept_code).delete()
+
+        return redirect("/department/enlist/")
+    except Exception as e:
+        print(e)
+
+    return HttpResponse("Department not deleted")
+
+
+@csrf_exempt
+def delete_student(request,studentId):
+    try:
+        if(request.method=="DELETE"):
+            Student_Id.objects.filter(student_id = studentId).delete()
+
+        return redirect("/")
+    except Exception as e:
+        print(e)
+
+    return HttpResponse("Student not deleted")
+
+
