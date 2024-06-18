@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block main %}
+<table class="table container">
+    <h2 class="text-center">Student Name : {{student_name}}</h2>
+    <h3 class="text-center">Total Marks : {{total.total}}</h3>
+    <h3 class="text-center">Rank : </h3>
+    <thead>
+      <tr>
+        <th scope="col">Row No</th>
+        <th scope="col">Subjects</th>
+        <th scope="col">Marks</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% if data %}
+        {% for s in data %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td scope="row">{{s.subject_name.sub_name}}</td>
+                <td>{{s.marks}}</td>
+            </tr>
+        {% endfor %}
+        {% else %}
+        <h4 class="text-center mt-3">No data Found</h4>
+        {% endif %}
+    </tbody>
+  </table>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="container">
+<form method="POST" action="/student/enlist/">
+  {% csrf_token %}
+    <div class="mb-3">
+        <label for="InputName" class="form-label">Student Name</label>
+        <input type="text" class="form-control" name="name" id="InputName" placeholder="Enter name here">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email here">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <label for="InputDepartment" class="form-label">Select Department</label>
+    <select class="form-select" name="department_name" aria-label="Default select example">
+      <option selected>Open this select menu</option>
+      {% for d in department_list %}
+        <option value='{{d}}'>{{d}}</option>
+      {% endfor %}
+    </select>
+    <div class="form-floating mt-3">
+        <label for="floatingTextarea">Address</label>
+        <textarea class="form-control" name="address" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px;"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</form>
+</div>
+{% endblock %}

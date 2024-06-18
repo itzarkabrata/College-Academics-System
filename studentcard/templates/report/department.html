@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="container mb-4">
+    <form method="POST" action="/department/enlist/">
+      {% csrf_token %}
+        <div class="mb-3">
+            <label for="InputDeptName" class="form-label">Department Name</label>
+            <input type="text" class="form-control" name="deptname" id="InputDeptName" placeholder="Enter new department name here">
+        </div>
+        <div class="mb-3">
+            <label for="InputDeptCode" class="form-label">Department Code</label>
+            <input type="text" class="form-control" name="deptcode" id="InputDeptCode" placeholder="Enter new department code here">
+        </div>
+        <div class="mb-3">
+            <label for="InputDeptHOD" class="form-label">HOD Name</label>
+            <input type="text" class="form-control" name="depthod" id="InputDeptHOD" placeholder="Enter name of new department HOD here">
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>
+
+<h3 class="text-center">Total Departments : {{results}}</h3>
+<table class="table container mb-5">
+    <thead>
+      <tr>
+        <th scope="col">Row No</th>
+        <th scope="col">Department Name</th>
+        <th scope="col">Department Code</th>
+        <th scope="col">HOD Name</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for s in data %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td scope="row">{{s.department}}</td>
+        <td>{{s.code}}</td>
+        <td>{{s.hod_name}}</td>
+        <td><button class="btn btn-sm btn-danger" onclick="delete_dept({{s.code}})">Delete</button></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+  
+{% endblock %}
