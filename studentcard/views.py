@@ -180,3 +180,20 @@ def delete_dept_subject(request,subject_code):
         print(e)
 
     return HttpResponse("Student not deleted")
+
+
+@csrf_exempt
+def delete_marks(request,student_identity):
+    try:
+        if(request.method == "GET"):
+
+            s_code = request.GET.get("scode")
+
+            Marks.objects.filter(student_name__stu_id__student_id = student_identity,subject_name__sub_code = s_code)[0].delete()
+
+            return redirect(f"/marks/{student_identity}")
+        
+    except Exception as e:
+        print(e)
+
+    return HttpResponse("Student not deleted")

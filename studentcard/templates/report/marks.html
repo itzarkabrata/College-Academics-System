@@ -33,6 +33,7 @@
         <th scope="col">Row No</th>
         <th scope="col">Subjects</th>
         <th scope="col">Marks</th>
+        <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -41,7 +42,8 @@
             <tr>
                 <th scope="row">{{forloop.counter}}</th>
                 <td scope="row">{{s.subject_name.sub_name}}</td>
-                <td>{{s.marks}}</td>
+                <td scope="row">{{s.marks}}</td>
+                <td scope="row"><a href="/marks/delete/{{student_info.id}}?scode={{s.subject_name.sub_code}}"><button class="btn btn-sm btn-danger">Delete</button></a></td>
             </tr>
         {% endfor %}
         {% else %}
