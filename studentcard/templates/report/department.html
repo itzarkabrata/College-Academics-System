@@ -36,7 +36,7 @@
     {% for s in data %}
       <tr>
         <th scope="row">{{forloop.counter}}</th>
-        <td scope="row">{{s.department}}</td>
+        <td scope="row"><a href="{{s.department}}">{{s.department}}</a></td>
         <td>{{s.code}}</td>
         <td>{{s.hod_name}}</td>
         <td><button class="btn btn-sm btn-danger" onclick="delete_dept({{s.code}})">Delete</button></td>

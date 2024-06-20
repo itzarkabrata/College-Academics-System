@@ -1,9 +1,33 @@
 {% extends "base.html" %}
 {% block main %}
+<div class="mx-auto">
+  <h2 class="text-center">Student Name : {{student_info.student_name}}</h2>
+  <h3 class="text-center">Deparment Name : {{student_info.student_dept}}</h3>
+  <h3 class="text-center">Total Marks : {{total.total}}</h3>
+  <h3 class="text-center">Rank : </h3>
+</div>
+
+<div class="container mb-4">
+  <form method="POST" action="/marks/{{student_info.id}}/">
+    {% csrf_token %}
+      <div class="mb-3">
+        <label for="InputSubject" class="form-label">Select Subject</label>
+        <select class="form-select" name="subject_code" aria-label="Default select example">
+          <option selected>Open this select menu</option>
+          {% for sub in student_info.sub_list %}
+            <option value='{{sub.sub_code}}'>{{sub.sub_name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="InputMarks" class="form-label">Marks Obtained</label>
+        <input type="text" class="form-control" name="marks" id="InputMarks" placeholder="Marks">
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">Add</button>
+  </form>
+</div>
+
 <table class="table container">
-    <h2 class="text-center">Student Name : {{student_name}}</h2>
-    <h3 class="text-center">Total Marks : {{total.total}}</h3>
-    <h3 class="text-center">Rank : </h3>
     <thead>
       <tr>
         <th scope="col">Row No</th>

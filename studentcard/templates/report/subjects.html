@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="my-5 text-center">
+<h2>Name of the Deparment : {{dept_info.name}}({{dept_info.code}})</h2>
+<h4>Name of HOD : {{dept_info.hod}}</h4>
+<a href="/department/enlist/{{dept_info.name}}"><button class="btn btn-primary mx-5">Refresh</button></a>
+</div>
+
+<div class="container mb-4">
+    <form method="POST" action="/department/enlist/{{dept_info.name}}">
+      {% csrf_token %}
+        <div class="mb-3">
+            <label for="InputSubjectName" class="form-label">Subject Name</label>
+            <input type="text" class="form-control" name="subname" id="InputSubjectName" placeholder="Enter new subject name here">
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Add</button>
+    </form>
+</div>
+
+<table class="table container mb-5">
+    <thead>
+      <tr>
+        <th scope="col">Row No</th>
+        <th scope="col">Subject Name</th>
+        <th scope="col">Subject Code</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for s in subjects %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td scope="row">{{s.sub_name}}</td>
+        <td>{{s.sub_code}}</td>
+        <td><button class="btn btn-sm btn-danger" onclick="del_sub('{{s.sub_code}}')">Delete</button></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+  
+{% endblock %}

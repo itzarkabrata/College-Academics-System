@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from studentcard.views import get_student,get_marks,enlist_student,enlist_dept,delete_dept,delete_student
+from studentcard.views import get_student,get_marks,enlist_student,enlist_dept,delete_dept,delete_student,show_dept_subjects,delete_dept_subject
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +25,7 @@ urlpatterns = [
     path('student/enlist/',enlist_student,name="enlistNewStudent"),
     path('department/enlist/',enlist_dept,name="enlistNewDepartment"),
     path('department/delete/<dept_code>',delete_dept,name="DeleteDepartment"),
-    path('student/delete/<studentId>',delete_student,name="DeleteStudent")
+    path('student/delete/<studentId>',delete_student,name="DeleteStudent"),
+    path('department/enlist/<dept_name>',show_dept_subjects,name="ShowDepartmentSubjects"),
+    path('subject/delete/<subject_code>',delete_dept_subject,name="DeleteSubject"),
 ]

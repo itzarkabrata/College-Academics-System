@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse,redirect
 import random
-from .models import Student,Marks,Department,Student_Id
+from .models import Student,Marks,Department,Student_Id,Subject
 from django.db.models import Q,Sum
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
@@ -29,8 +29,22 @@ def get_student(request):
 @csrf_exempt
 def get_marks(request,s_id):
     try:
-        queryMarks = Marks.objects.filter(student_name__stu_id__student_id = s_id)
         queryStudent = Student.objects.filter(stu_id__student_id = s_id)
+
+        if(request.method == "POST"):
+            subject_code = request.POST.get("subject_code")
+            marks = request.POST.get("marks")
+
+            sub_ins = Subject.objects.filter(sub_code = subject_code)
+
+            Marks.objects.create(
+                student_name = queryStudent[0],
+                subject_name = sub_ins[0],
+                marks = float(marks)
+            )
+
+        queryMarks = Marks.objects.filter(student_name__stu_id__student_id = s_id)
+
         if(len(queryMarks)!=0):
             student_name = queryMarks.first().student_name.stu_name
             total_marks = queryMarks.aggregate(total = Sum("marks"))
@@ -38,7 +52,12 @@ def get_marks(request,s_id):
             queryMarks = False
             total_marks = {"total" : 0}
             student_name = queryStudent.first().stu_name
-        return render(request,"report/marks.html",context={"data" : queryMarks,"total":total_marks,"student_name":student_name})
+
+        student_dept = queryStudent.first().dept.department
+
+        sub_list = Subject.objects.filter(sub_dept__department = student_dept)
+
+        return render(request,"report/marks.html",context={"data" : queryMarks,"total":total_marks,"student_info" :{"student_name":student_name,"student_dept" : student_dept,"id" : s_id, "sub_list" : sub_list}})
     except Exception as e:
         print(e)
     return HttpResponse("No Page Found")
@@ -99,7 +118,7 @@ def delete_dept(request,dept_code):
         if(request.method=="DELETE"):
             Department.objects.filter(code = dept_code).delete()
 
-        return redirect("/department/enlist/")
+        return redirect("enlistNewDepartment")
     except Exception as e:
         print(e)
 
@@ -119,3 +138,45 @@ def delete_student(request,studentId):
     return HttpResponse("Student not deleted")
 
 
+@csrf_exempt
+def show_dept_subjects(request,dept_name):
+    try:
+        if(request.method == "POST"):
+            subject_name = request.POST.get("subname")
+
+            dept_ins = Department.objects.filter(department = dept_name)[0]
+
+            code = subject_name.upper()[0:3]+"-"+dept_name.upper()[0:2]+str(len(Subject.objects.all())+1)+str(random.randint(10,99))
+
+            Subject.objects.create(
+                sub_dept = dept_ins,
+                sub_name = subject_name,
+                sub_code = code
+            )
+
+        subjects = Subject.objects.filter(sub_dept__department = dept_name)
+
+        hod = subjects[0].sub_dept.hod_name
+
+        code = subjects[0].sub_dept.code
+
+        return render(request,"report/subjects.html",context={"dept_info":{"name" : dept_name,"hod" : hod,"code" : code},"subjects" : subjects})
+    except Exception as e:
+        print(e)
+
+    return HttpResponse("Subjects not shown")
+
+
+@csrf_exempt
+def delete_dept_subject(request,subject_code):
+    try:
+        if(request.method=="DELETE"):
+            sub_ins = Subject.objects.filter(sub_code = subject_code)
+            subj_name = sub_ins[0].sub_name
+            sub_ins.delete()
+
+        return redirect(f"/department/enlist/{subj_name}")
+    except Exception as e:
+        print(e)
+
+    return HttpResponse("Student not deleted")

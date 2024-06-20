@@ -18,4 +18,4 @@ class MarksAdmin(admin.ModelAdmin):
 
 @admin.register(Subject)
 class SubjcetAdmin(admin.ModelAdmin):
-    list_display = ["sub_name","sub_code"]
+    list_display = ["sub_dept","sub_name","sub_code"]

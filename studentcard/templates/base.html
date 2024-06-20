@@ -29,6 +29,14 @@
         let accept = confirm(`Are you want to delete the dept with code ${code}?`)
         if(accept){
             let res = await fetch(`/department/delete/${code}`,{method : "DELETE"});
+            let data = await res.json()
+        }
+    }
+
+    async function del_sub(sub_code){
+        let accept2 = confirm(`Are you want to delete the subject with code ${sub_code} ?`)
+        if(accept2){
+            let res = await fetch(`/subject/delete/${sub_code}`,{method : "DELETE"});
             let data = await res.json();
         }
     }
