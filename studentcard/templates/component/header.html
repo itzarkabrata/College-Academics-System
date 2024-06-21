@@ -1,21 +1,31 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary position-fixed fixed-top">
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Report Menia</a>
+      <a class="navbar-brand fw-bold text-primary fs-4" style="text-shadow: 0.1px 0.1px 0.8px black;" href="/"><i class="fa-solid fa-building-columns me-1 fs-3 text-primary"></i>Info Care</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="collapse navbar-collapse d-flex flex-column flex-lg-row justify-content-start align-items-start justify-content-lg-between align-items-lg-center px-2" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link text-primary" aria-current="page" href="/">Home</a>
+            <a class="nav-link link-primary" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-primary" href="/student/enlist">Enlist New Student</a>
+            <a class="nav-link link-primary" aria-current="page" href="/student-details">Student Details</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-primary" href="/department/enlist">Enlist New Department</a>
+            <a class="nav-link link-primary" href="/student/enlist">Enlist New Student</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link link-primary" href="/department/enlist">Enlist New Department</a>
           </li>
         </ul>
+        {% comment %} {% if isLogin %} {% endcomment %}
+        {% comment %} <div class="fs-6">
+          <i class="fa-solid fa-user fs-5 me-3 text-primary" style="text-shadow: 0.1px 0.1px 0.8px black;"></i>Username
+        </div> {% endcomment %}
+        {% comment %} {% else %} {% endcomment %}
+        <a href="#"><button class="btn btn-primary my-2 my-lg-0">Login/Signup</button></a>
+        {% comment %} {% endif %} {% endcomment %}
       </div>
     </div>
   </nav>

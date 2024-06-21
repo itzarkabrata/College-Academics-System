@@ -7,6 +7,15 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 @csrf_exempt
+def home_screen(request):
+    try:
+        return render(request,"report/home.html")
+    except Exception as e:
+        print(e)
+    return HttpResponse("Student not deleted")
+
+
+@csrf_exempt
 def get_student(request):
     try:
         studentQuery = Student.objects.all()
@@ -55,9 +64,11 @@ def get_marks(request,s_id):
 
         student_dept = queryStudent.first().dept.department
 
+        student_dept_code = queryStudent.first().dept.code
+
         sub_list = Subject.objects.filter(sub_dept__department = student_dept)
 
-        return render(request,"report/marks.html",context={"data" : queryMarks,"total":total_marks,"student_info" :{"student_name":student_name,"student_dept" : student_dept,"id" : s_id, "sub_list" : sub_list}})
+        return render(request,"report/marks.html",context={"data" : queryMarks,"total":total_marks,"student_info" :{"student_name":student_name,"student_dept" : student_dept,"student_dept_code":student_dept_code,"id" : s_id, "sub_list" : sub_list}})
     except Exception as e:
         print(e)
     return HttpResponse("No Page Found")
@@ -192,6 +203,18 @@ def delete_marks(request,student_identity):
             Marks.objects.filter(student_name__stu_id__student_id = student_identity,subject_name__sub_code = s_code)[0].delete()
 
             return redirect(f"/marks/{student_identity}")
+        
+    except Exception as e:
+        print(e)
+
+    return HttpResponse("Student not deleted")
+
+@csrf_exempt
+def profile_info(request,profile_code):
+    try:
+        stu_ins = Student.objects.filter(stu_id__student_id = profile_code)[0]
+
+        return render(request,"report/profile.html",context={"stu_info" : stu_ins})
         
     except Exception as e:
         print(e)

@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% block main %}
-<div class="my-5 text-center">
-<h2>Name of the Deparment : {{dept_info.name}}({{dept_info.code}})</h2>
-<h4>Name of HOD : {{dept_info.hod}}</h4>
-<a href="/department/enlist/{{dept_info.name}}"><button class="btn btn-primary mx-5">Refresh</button></a>
+<div class="mt-2 mb-4 text-center">
+<div class="fs-2 fw-semibold">Department of {{dept_info.name}}({{dept_info.code}})</div>
+<div class="fs-5">Name of HOD : {{dept_info.hod}}</div>
 </div>
 
-<div class="container mb-4">
-    <form method="POST" action="/department/enlist/{{dept_info.name}}">
+<div class="container mb-4 d-flex justify-content-start align-items-center">
+    <form method="POST" action="/department/enlist/{{dept_info.name}}" class="d-flex justify-content-center align-items-center w-50">
       {% csrf_token %}
-        <div class="mb-3">
+        <div class="mb-3 me-3 w-75">
             <label for="InputSubjectName" class="form-label">Subject Name</label>
             <input type="text" class="form-control" name="subname" id="InputSubjectName" placeholder="Enter new subject name here">
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Add</button>
+        <button type="submit" class="btn btn-info mt-3 me-1"><i class="fa fa-add me-2"></i>Add</button>
     </form>
+    <a href="/department/enlist/{{dept_info.name}}"><button class="btn btn-info btn-sm mt-3"><i class="fa fa-refresh"></i></button></a>
 </div>
 
-<table class="table container mb-5">
+<table class="table container table-bordered text-center mb-5">
     <thead>
       <tr>
         <th scope="col">Row No</th>
@@ -32,7 +32,9 @@
         <th scope="row">{{forloop.counter}}</th>
         <td scope="row">{{s.sub_name}}</td>
         <td>{{s.sub_code}}</td>
-        <td><button class="btn btn-sm btn-danger" onclick="del_sub('{{s.sub_code}}')">Delete</button></td>
+        <td>
+          <i class="fa fa-trash text-danger fs-5" style="cursor: pointer;" onclick="del_sub('{{s.sub_code}}')"></i>
+        </td>
       </tr>
     {% endfor %}
     </tbody>

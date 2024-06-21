@@ -5,24 +5,24 @@
       {% csrf_token %}
         <div class="mb-3">
             <label for="InputDeptName" class="form-label">Department Name</label>
-            <input type="text" class="form-control" name="deptname" id="InputDeptName" placeholder="Enter new department name here">
+            <input type="text" class="form-control w-50" name="deptname" id="InputDeptName" placeholder="Enter new department name here">
         </div>
         <div class="mb-3">
             <label for="InputDeptCode" class="form-label">Department Code</label>
-            <input type="text" class="form-control" name="deptcode" id="InputDeptCode" placeholder="Enter new department code here">
+            <input type="text" class="form-control w-50" name="deptcode" id="InputDeptCode" placeholder="Enter new department code here">
         </div>
         <div class="mb-3">
             <label for="InputDeptHOD" class="form-label">HOD Name</label>
-            <input type="text" class="form-control" name="depthod" id="InputDeptHOD" placeholder="Enter name of new department HOD here">
+            <input type="text" class="form-control w-50" name="depthod" id="InputDeptHOD" placeholder="Enter name of new department HOD here">
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        <button type="submit" class="btn btn-info mt-3"><i class="fa fa-add me-2"></i>Add</button>
     </form>
 </div>
-<div class="d-flex align-items-center justify-content-center">
-  <h3>Total Departments : {{results}}</h3>
-  <a href="/department/enlist"><button class="btn btn-primary mx-5">Refresh</button></a>
+<div class="d-flex my-3 container align-items-center justify-content-start">
+  <div class="fs-5">Total Departments : {{results}}</div>
+  <a href="/department/enlist"><button class="btn btn-info btn-sm mx-3"><i class="fa fa-refresh"></i></button></a>
 </div>
-<table class="table container mb-5">
+<table class="table container mb-5 table-bordered text-center">
     <thead>
       <tr>
         <th scope="col">Row No</th>
@@ -36,10 +36,12 @@
     {% for s in data %}
       <tr>
         <th scope="row">{{forloop.counter}}</th>
-        <td scope="row"><a href="{{s.department}}">{{s.department}}</a></td>
+        <td scope="row">{{s.department}}<a href="{{s.department}}"><i class="fa-solid fa-up-right-from-square ms-2"></i></a></td>
         <td>{{s.code}}</td>
         <td>{{s.hod_name}}</td>
-        <td><button class="btn btn-sm btn-danger" onclick="delete_dept({{s.code}})">Delete</button></td>
+        <td>
+          <i class="fa fa-trash text-danger fs-5" style="cursor: pointer;" onclick="delete_dept({{s.code}})"></i>
+        </td>
       </tr>
     {% endfor %}
     </tbody>

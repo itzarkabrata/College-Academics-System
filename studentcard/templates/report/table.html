@@ -1,17 +1,22 @@
 {% extends "base.html" %}
 {% block main %}
+<div class="container text-center">
+  <div class="fs-2 fw-semibold">Name of the College (ABC)</div>
+  <p class="fs-5">ESTD : 1956</p>
+  <p class="fs-5">P-277 Narkeldanga CIT more, Beleghata, Kolkata - 700064</p>
+</div>
 <div class = "d-flex align-items-center justify-content-center container my-5">
-  <form class="d-flex w-50" role="search" action="/" method="POST">
+  <form class="d-flex w-50" role="search" action="/student-details/" method="POST">
     {% csrf_token %}
-    <input class="form-control" name = "searchpara" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-success mx-3" type="submit">Search</button>
+    <input class="form-control" name = "searchpara" type="search" placeholder="Search By student id, Name, or Department" aria-label="Search">
+    <button class="btn btn-info mx-3" type="submit"><i class="fa fa-search"></i></button>
   </form>
 </div>
-<div class="d-flex align-items-center justify-content-center">
-  <h3>Total Results : {{results}}</h3>
-  <a href="/"><button class="btn btn-primary mx-5">Refresh</button></a>
+<div class="d-flex container align-items-center justify-content-start mb-2">
+  <div class="fs-5 fw-semibold">Total Results : {{results}}</div>
+  <a href="/student-details/"><button class="btn btn-info btn-sm mx-3"><i class="fa fa-refresh"></i></button></a>
 </div>
-<table class="table container">
+<table class="table container table-bordered text-center">
   <thead>
       <tr>
         <th scope="col">Row No</th>
@@ -27,12 +32,14 @@
     {% for s in data %}
       <tr>
         <th scope="row" id="{{forloop.counter}}">{{forloop.counter}}</th>
-        <td scope="row"><a href="marks/{{s.stu_id.student_id}}">{{s.stu_id.student_id}}</a></td>
-        <td>{{s.stu_name}}</td>
+        <td scope="row"><a class="text-decoration-none" href="/marks/{{s.stu_id.student_id}}">{{s.stu_id.student_id}}</a></td>
+        <td><a href="/profile/{{s.stu_id.student_id}}"><i class="fa fa-user me-2"></i></a>{{s.stu_name}}</td>
         <td>{{s.dept.department}}</td>
         <td>{{s.stu_email}}</td>
         <td>{{s.stu_address}}</td>
-        <td><button class="btn btn-sm btn-danger" onclick="del_student('{{s.stu_id.student_id}}')">Delete</button></td>
+        <td>
+          <i class="fa fa-trash text-danger fs-5" style="cursor: pointer;" onclick="del_student('{{s.stu_id.student_id}}')"></i>
+        </td>
         <script>
           var s{{forloop.counter}} = {{forloop.counter}}+{{row_no}}-1
           document.getElementById("{{forloop.counter}}").innerHTML = s{{forloop.counter}};
@@ -41,7 +48,7 @@
     {% endfor %}
     </tbody>
 </table>
-<div aria-label="Page navigation example" class="container">
+<div aria-label="Page navigation example" class="container d-flex justify-content-center align-items-center mt-5">
       <ul class="pagination">
         {% if data.has_previous %}
         <li class="page-item"><a href="?page=1" class = "page-link">&laquo; first</a></li>

@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block main %}
 <div class="mx-auto">
-  <h2 class="text-center">Student Name : {{student_info.student_name}}</h2>
-  <h3 class="text-center">Deparment Name : {{student_info.student_dept}}</h3>
-  <h3 class="text-center">Total Marks : {{total.total}}</h3>
-  <h3 class="text-center">Rank : </h3>
+  <div class="text-center fs-2 fw-semibold">Student Name : {{student_info.student_name}}</div>
+  <div class="text-center fs-5">Deparment Name : {{student_info.student_dept}} ({{student_info.student_dept_code}})</div>
+  <div class="text-center fs-5">Total Marks : {{total.total}}</div>
+  <div class="text-center fs-5">Rank : </div>
 </div>
 
-<div class="container mb-4">
-  <form method="POST" action="/marks/{{student_info.id}}/">
+
+
+<div class="container my-4">
+  <form method="POST" action="/marks/{{student_info.id}}/" class="d-flex justify-content-start align-items-center">
     {% csrf_token %}
-      <div class="mb-3">
+      <div class="mb-3 me-4 w-25">
         <label for="InputSubject" class="form-label">Select Subject</label>
         <select class="form-select" name="subject_code" aria-label="Default select example">
           <option selected>Open this select menu</option>
@@ -19,15 +21,16 @@
           {% endfor %}
         </select>
       </div>
-      <div class="mb-3">
+      <div class="mb-3 me-4">
         <label for="InputMarks" class="form-label">Marks Obtained</label>
         <input type="text" class="form-control" name="marks" id="InputMarks" placeholder="Marks">
       </div>
-      <button type="submit" class="btn btn-primary mt-3">Add</button>
+      <button type="submit" class="btn btn-info mt-3"><i class="fa fa-add me-2"></i>Add</button>
   </form>
 </div>
 
-<table class="table container">
+
+<table class="table container table-bordered text-center">
     <thead>
       <tr>
         <th scope="col">Row No</th>
@@ -43,11 +46,13 @@
                 <th scope="row">{{forloop.counter}}</th>
                 <td scope="row">{{s.subject_name.sub_name}}</td>
                 <td scope="row">{{s.marks}}</td>
-                <td scope="row"><a href="/marks/delete/{{student_info.id}}?scode={{s.subject_name.sub_code}}"><button class="btn btn-sm btn-danger">Delete</button></a></td>
+                <td scope="row">
+                  <a href="/marks/delete/{{student_info.id}}?scode={{s.subject_name.sub_code}}"><i class="fa fa-trash text-danger fs-5" style="cursor: pointer;"></i></a>
+                </td>
             </tr>
         {% endfor %}
         {% else %}
-        <h4 class="text-center mt-3">No data Found</h4>
+        <div class="text-center mt-3 fs-4 mb-3">No data Found</div>
         {% endif %}
     </tbody>
   </table>

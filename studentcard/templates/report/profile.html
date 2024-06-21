@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block main %}
+    <div class="container">
+        <h2 class="text-center">Student Name : {{stu_info.stu_name}} ({{stu_info.stu_id.student_id}})</h2>
+        <h4 class="text-center">Department of {{stu_info.dept.department}} ({{stu_info.dept.code}})</h4>
+        <div>
+            <b>Email ID</b> : {{stu_info.stu_email}}<br>
+            <b>Address</b> : {{stu_info.stu_address}}
+        </div>
+    </div>
+    
+{% endblock %}
