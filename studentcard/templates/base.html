@@ -11,6 +11,14 @@
     <header>
     {% include "component/header.html" %}
     </header>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="messages alert alert-{{message.tags}} alert-dismissible fade show  position-fixed w-100 fw-semibold" style="top: 62px; border-radius: unset;" role="alert">
+        <i class="fa fa-check-circle me-4 fs-5"></i>{{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    {% endif %}
     <div class="pb-5 pt-5 mt-5" style="min-height: 78.1vh">{% block main %}{% endblock  %}</div>
     <footer>
     {% include "component/footer.html" %}

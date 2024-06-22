@@ -4,6 +4,7 @@ from .models import Student,Marks,Department,Student_Id,Subject
 from django.db.models import Q,Sum
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 
 # Create your views here.
 @csrf_exempt
@@ -12,7 +13,8 @@ def home_screen(request):
         return render(request,"report/home.html")
     except Exception as e:
         print(e)
-    return HttpResponse("Student not deleted")
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
 
 
 @csrf_exempt
@@ -33,7 +35,8 @@ def get_student(request):
     except Exception as e:
         print(e)
 
-    return HttpResponse("No pages Found")
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
 
 @csrf_exempt
 def get_marks(request,s_id):
@@ -51,6 +54,8 @@ def get_marks(request,s_id):
                 subject_name = sub_ins[0],
                 marks = float(marks)
             )
+
+            messages.success(request,"Marks added successfully")
 
         queryMarks = Marks.objects.filter(student_name__stu_id__student_id = s_id)
 
@@ -71,7 +76,8 @@ def get_marks(request,s_id):
         return render(request,"report/marks.html",context={"data" : queryMarks,"total":total_marks,"student_info" :{"student_name":student_name,"student_dept" : student_dept,"student_dept_code":student_dept_code,"id" : s_id, "sub_list" : sub_list}})
     except Exception as e:
         print(e)
-    return HttpResponse("No Page Found")
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
 
 @csrf_exempt
 def enlist_student(request):
@@ -96,13 +102,16 @@ def enlist_student(request):
 
             Student.objects.create(stu_id = new_sid,dept = new_sdept,stu_name = name,stu_email = email,stu_address = address)
 
+            messages.success(request,"Student added successfully")
+
         return render(request,"report/student.html",context={
             "department_list" : department_list
         })
     except Exception as e:
         print(e)
 
-    return HttpResponse("Student Not added")
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
 
 @csrf_exempt
 def enlist_dept(request):
@@ -114,13 +123,16 @@ def enlist_dept(request):
 
             Department.objects.create(department = deptname,code = deptcode,hod_name = depthod)
 
+            messages.success(request,"Department Added Successfully")
+
         queryDept = Department.objects.all()
 
         return render(request,"report/department.html",context={"data" : queryDept,"results" : len(queryDept)})
     except Exception as e:
         print(e)
 
-    return HttpResponse("Deparment Not Added")
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
 
 
 @csrf_exempt
@@ -129,11 +141,14 @@ def delete_dept(request,dept_code):
         if(request.method=="DELETE"):
             Department.objects.filter(code = dept_code).delete()
 
+            messages.warning(request,f"Department with code {dept_code} deleted successfully")
+
         return redirect("enlistNewDepartment")
     except Exception as e:
         print(e)
 
-    return HttpResponse("Department not deleted")
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
 
 
 @csrf_exempt
@@ -142,11 +157,14 @@ def delete_student(request,studentId):
         if(request.method=="DELETE"):
             Student_Id.objects.filter(student_id = studentId).delete()
 
-        return redirect("/")
+            messages.warning(request,f"Student with id {studentId} deleted successfully")
+
+        return redirect("/student-details/")
     except Exception as e:
         print(e)
 
-    return HttpResponse("Student not deleted")
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
 
 
 @csrf_exempt
@@ -165,6 +183,8 @@ def show_dept_subjects(request,dept_name):
                 sub_code = code
             )
 
+            messages.success(request,f"Subject added successfully for Department of {dept_name}")
+
         subjects = Subject.objects.filter(sub_dept__department = dept_name)
 
         hod = subjects[0].sub_dept.hod_name
@@ -175,7 +195,8 @@ def show_dept_subjects(request,dept_name):
     except Exception as e:
         print(e)
 
-    return HttpResponse("Subjects not shown")
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
 
 
 @csrf_exempt
@@ -186,11 +207,13 @@ def delete_dept_subject(request,subject_code):
             subj_name = sub_ins[0].sub_name
             sub_ins.delete()
 
+            messages.warning(request,"Department deleted succesfully")
+
         return redirect(f"/department/enlist/{subj_name}")
     except Exception as e:
         print(e)
-
-    return HttpResponse("Student not deleted")
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
 
 
 @csrf_exempt
@@ -201,13 +224,14 @@ def delete_marks(request,student_identity):
             s_code = request.GET.get("scode")
 
             Marks.objects.filter(student_name__stu_id__student_id = student_identity,subject_name__sub_code = s_code)[0].delete()
+            messages.warning(request,"Marks Deleted Succesfully")
 
             return redirect(f"/marks/{student_identity}")
         
     except Exception as e:
         print(e)
-
-    return HttpResponse("Student not deleted")
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
 
 @csrf_exempt
 def profile_info(request,profile_code):
@@ -219,4 +243,32 @@ def profile_info(request,profile_code):
     except Exception as e:
         print(e)
 
-    return HttpResponse("Student not deleted")
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
+
+
+@csrf_exempt
+def login_page(request):
+    try:
+
+        return render(request,"report/login.html")
+        
+    except Exception as e:
+        print(e)
+
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
+
+@csrf_exempt
+def signup_page(request):
+    try:
+        if(request.method == "POST"):
+            pass
+
+        return render(request,"report/signup.html")
+        
+    except Exception as e:
+        print(e)
+
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
