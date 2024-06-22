@@ -1,7 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Department(models.Model):
+    user = models.ForeignKey(User,related_name="userauth",on_delete=models.CASCADE,null=True,blank=True)
     department = models.CharField(max_length=50,default=None,unique=True)
     code = models.IntegerField(default=None,unique=True)
     hod_name = models.CharField(max_length=100,default=None)
@@ -13,6 +15,7 @@ class Department(models.Model):
         return self.department
     
 class Student_Id(models.Model):
+    user = models.ForeignKey(User,related_name="userauth_id",on_delete=models.CASCADE,null=True,blank=True)
     student_id = models.CharField(max_length=20,default=None)
 
     def __str__(self):

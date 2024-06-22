@@ -9,6 +9,7 @@
           <li class="nav-item">
             <a class="nav-link link-primary" aria-current="page" href="/">Home</a>
           </li>
+          {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link link-primary" aria-current="page" href="/student-details">Student Details</a>
           </li>
@@ -18,14 +19,21 @@
           <li class="nav-item">
             <a class="nav-link link-primary" href="/department/enlist">Enlist New Department</a>
           </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link link-primary" aria-current="page" href="#">Contact</a>
+          </li>
         </ul>
-        {% comment %} {% if isLogin %} {% endcomment %}
-        {% comment %} <div class="fs-6">
-          <i class="fa-solid fa-user fs-5 me-3 text-primary" style="text-shadow: 0.1px 0.1px 0.8px black;"></i>Username
-        </div> {% endcomment %}
-        {% comment %} {% else %} {% endcomment %}
+        {% if request.user.is_authenticated %}
+        <div class="d-flex justify-content-start align-items-center">
+          <div class="fs-6  me-3">
+            <i class="fa-solid fa-user fs-5 me-2 text-primary" style="text-shadow: 0.1px 0.1px 0.8px black;"></i>{{request.user.username}}
+          </div>
+          <a href="/logout"><button class="btn btn-primary my-2 my-lg-0"><i class="fa-solid fa-power-off"></i></button></a>
+        </div>
+        {% else %}
         <a href="/login"><button class="btn btn-primary my-2 my-lg-0">Login/Signup</button></a>
-        {% comment %} {% endif %} {% endcomment %}
+        {% endif %}
       </div>
     </div>
   </nav>

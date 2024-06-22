@@ -1,10 +1,12 @@
-from django.shortcuts import render,HttpResponse,redirect
+from django.shortcuts import render,redirect
 import random
 from .models import Student,Marks,Department,Student_Id,Subject
 from django.db.models import Q,Sum
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 @csrf_exempt
@@ -250,6 +252,25 @@ def profile_info(request,profile_code):
 @csrf_exempt
 def login_page(request):
     try:
+        if(request.method == "POST"):
+            username = request.POST.get("username")
+            password = request.POST.get("password")
+
+            if(User.objects.filter(username = username).exists()):
+                user = authenticate(username = username,password = password)
+
+                if user is None:
+                    messages.warning(request,"Invalid Password : Check your password again")
+                    return redirect("/login/")
+                
+                else:
+                    login(request,user)
+                    messages.success(request,"Succesfully logged in")
+                    return redirect("/student-details/")
+            
+            else:
+                messages.warning(request,"Invalid Username : user not exits")
+                return redirect("/login/")
 
         return render(request,"report/login.html")
         
@@ -263,10 +284,37 @@ def login_page(request):
 def signup_page(request):
     try:
         if(request.method == "POST"):
-            pass
+            username = request.POST.get("username")
+            email = request.POST.get("email")
+            password = request.POST.get("password")
+
+            if(User.objects.filter(username = username).exists()):
+                messages.warning(request,"Username already exists, Please try with other name")
+                return redirect("/signup/")
+            
+            user = User.objects.create(
+                username = username,
+                email = email
+            )
+
+            user.set_password(password)
+            user.save()
+            
+            messages.success(request,"Account created successfully")
 
         return render(request,"report/signup.html")
         
+    except Exception as e:
+        print(e)
+
+    messages.warning(request,"Something went wrong at the server")
+    return render(request,"report/error.html")
+
+def logout_page(request):
+    try:
+        logout(request)
+        return redirect("/login/")
+
     except Exception as e:
         print(e)
 

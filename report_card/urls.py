@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from studentcard.views import get_student,get_marks,enlist_student,enlist_dept,delete_dept,delete_student,show_dept_subjects,delete_dept_subject,delete_marks,profile_info,home_screen,login_page,signup_page
+from studentcard.views import get_student,get_marks,enlist_student,enlist_dept,delete_dept,delete_student,show_dept_subjects,delete_dept_subject,delete_marks,profile_info,home_screen,login_page,signup_page,logout_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,4 +33,5 @@ urlpatterns = [
     path('profile/<profile_code>',profile_info,name="Profile"),
     path('login/',login_page,name="Login"),
     path('signup/',signup_page,name="Signup"),
+    path('logout/',logout_page,name="Logout"),
 ]
