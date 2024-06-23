@@ -22,6 +22,7 @@ def home_screen(request):
 @csrf_exempt
 def get_student(request):
     try:
+        
         studentQuery = Student.objects.all()
     
         if(request.method == "POST"):

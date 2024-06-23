@@ -1,10 +1,15 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold text-primary fs-4" style="text-shadow: 0.1px 0.1px 0.8px black;" href="/"><i class="fa-solid fa-building-columns me-1 fs-3 text-primary"></i>Info Care</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse d-flex flex-column flex-lg-row justify-content-start align-items-start justify-content-lg-between align-items-lg-center px-2" id="navbarNav">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-primary fs-4" style="text-shadow: 0.1px 0.1px 0.8px black;" href="/"><i
+        class="fa-solid fa-building-columns me-1 fs-3 text-primary"></i>Sikhsayatan</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      {% comment %} <span class="navbar-toggler-icon"></span> {% endcomment %}
+      <span><i class="fa fa-bars text-primary"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div
+        class=" d-flex w-100 flex-column flex-lg-row justify-content-start align-items-start justify-content-lg-between align-items-lg-center px-2">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link link-primary" aria-current="page" href="/">Home</a>
@@ -27,13 +32,15 @@
         {% if request.user.is_authenticated %}
         <div class="d-flex justify-content-start align-items-center">
           <div class="fs-6  me-3">
-            <i class="fa-solid fa-user fs-5 me-2 text-primary" style="text-shadow: 0.1px 0.1px 0.8px black;"></i>{{request.user.username}}
+            <i class="fa-solid fa-user fs-5 me-2 text-primary"
+              style="text-shadow: 0.1px 0.1px 0.8px black;"></i>{{request.user.username}}
           </div>
-          <a href="/logout"><button class="btn btn-primary my-2 my-lg-0"><i class="fa-solid fa-power-off"></i></button></a>
+          <a href="/logout"><button class="btn btn-info my-2 my-lg-0"><i class="fa-solid fa-power-off"></i></button></a>
         </div>
         {% else %}
         <a href="/login"><button class="btn btn-primary my-2 my-lg-0">Login/Signup</button></a>
         {% endif %}
       </div>
     </div>
-  </nav>
+  </div>
+</nav>

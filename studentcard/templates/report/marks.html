@@ -11,9 +11,9 @@
 
 
 <div class="container my-4">
-  <form method="POST" action="/marks/{{student_info.id}}/" class="d-flex justify-content-start align-items-center">
+  <form method="POST" action="/marks/{{student_info.id}}/" class="d-flex flex-column flex-md-row justify-content-md-start justify-content-center align-items-start align-items-md-center">
     {% csrf_token %}
-      <div class="mb-3 me-4 w-25">
+      <div class="mb-3 me-4 w-50">
         <label for="InputSubject" class="form-label">Select Subject</label>
         <select class="form-select" name="subject_code" aria-label="Default select example">
           <option selected>Open this select menu</option>
@@ -30,8 +30,8 @@
   </form>
 </div>
 
-
-<table class="table container table-bordered text-center">
+<div class="px-2 overflow-scroll">
+<table class="table container table-bordered text-center table-responsive-md">
     <thead>
       <tr>
         <th scope="col">Row No</th>
@@ -57,5 +57,6 @@
         {% endif %}
     </tbody>
   </table>
+</div>
 
 {% endblock %}

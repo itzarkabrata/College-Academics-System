@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block main %}
 <div class="container text-center">
-  <div class="fs-2 fw-semibold">Name of the College (ABC)</div>
-  <p class="fs-5">ESTD : 1956</p>
+  <div class="fs-2 text-primary fw-semibold" style="text-shadow: 0.2px 0.2px 1px black;">Sikhsayatan College of Arts and Engineering</div>
+  <p class="fs-5 fw-semibold text-info" style="text-shadow: 0.1px 0.1px 1px black;">ESTD : 1956</p>
   <p class="fs-5">P-277 Narkeldanga CIT more, Beleghata, Kolkata - 700064</p>
 </div>
-<div class = "d-flex align-items-center justify-content-center container my-5">
-  <form class="d-flex w-50" role="search" action="/student-details/" method="POST">
+<div class = "d-flex align-items-center justify-content-center container my-5 w-full">
+  <form class="d-flex w-75" role="search" action="/student-details/" method="POST">
     {% csrf_token %}
     <input class="form-control" name = "searchpara" type="search" placeholder="Search By student id, Name, or Department" aria-label="Search">
     <button class="btn btn-info mx-3" type="submit"><i class="fa fa-search"></i></button>
@@ -16,7 +16,8 @@
   <div class="fs-5 fw-semibold">Total Results : {{results}}</div>
   <a href="/student-details/"><button class="btn btn-info btn-sm mx-3"><i class="fa fa-refresh"></i></button></a>
 </div>
-<table class="table container table-bordered text-center">
+<div class="px-2 overflow-scroll">
+<table class="table container table-bordered text-center table-responsive-md">
   <thead>
       <tr>
         <th scope="col">Row No</th>
@@ -48,20 +49,27 @@
     {% endfor %}
     </tbody>
 </table>
+</div>
 <div aria-label="Page navigation example" class="container d-flex justify-content-center align-items-center mt-5">
       <ul class="pagination">
         {% if data.has_previous %}
-        <li class="page-item"><a href="?page=1" class = "page-link">&laquo; first</a></li>
-          <li class="page-item"><a href="?page={{ data.previous_page_number }}" class = "page-link">previous</a></li>
+        <li class="page-item" ><a href="?page=1" class = "page-link">&laquo; first</a></li>
+        <li class="page-item"><a href="?page={{ data.previous_page_number }}" class = "page-link">previous</a></li>
+        {% else %}
+        <li class="page-item disabled" style="cursor: not-allowed;"><a href="#" class = "page-link">&laquo; first</a></li>
+        <li class="page-item disabled" style="cursor: not-allowed;"><a href="#" class = "page-link">previous</a></li>
         {% endif %}
 
-        <li class="page-item mx-2 judtify-center mt-1">
+        <li class="page-item mx-2 justify-center mt-1 text-primary fw-semibold">
             Page {{ data.number }} of {{ data.paginator.num_pages }}.
         </li>
 
         {% if data.has_next %}
         <li class="page-item"><a href="?page={{ data.next_page_number }}" class = "page-link">next</a></li>
-          <li class="page-item"><a href="?page={{ data.paginator.num_pages }}" class = "page-link">last &raquo;</a></li>
+        <li class="page-item"><a href="?page={{ data.paginator.num_pages }}" class = "page-link">last &raquo;</a></li>
+        {% else %}
+        <li class="page-item disabled" style="cursor: not-allowed;"><a href="#" class = "page-link">next</a></li>
+        <li class="page-item disabled" style="cursor: not-allowed;"><a href="#" class = "page-link">last &raquo;</a></li>
         {% endif %}
       </ul>
 </div>
