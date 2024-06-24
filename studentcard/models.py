@@ -27,6 +27,9 @@ class Student(models.Model):
     stu_name = models.CharField(max_length=100,default="student")
     stu_email = models.EmailField(default=None,unique=True)
     stu_address = models.CharField(max_length=100,default=None)
+    stu_pincode = models.IntegerField(default=None,null=True,blank=True)
+    stu_dob = models.DateField(default=None,null=True,blank=True)
+    stu_guardian_name = models.CharField(max_length=50,default=None,null=True,blank=True)
 
     def __str__(self):
         return self.stu_name

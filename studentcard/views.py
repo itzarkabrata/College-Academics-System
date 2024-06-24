@@ -96,6 +96,9 @@ def enlist_student(request):
             email = request.POST.get("email")
             department_name = request.POST.get("department_name")
             address = request.POST.get("address")
+            pincode = request.POST.get("pincode")
+            dob = request.POST.get("dob")
+            guardian_name = request.POST.get("guardian_name")
 
             myid = department_name.upper()[0:3]+str(len(Student.objects.all())+1)+str(random.randint(10,100))
 
@@ -103,7 +106,7 @@ def enlist_student(request):
 
             new_sdept = Department.objects.filter(department = department_name)[0]
 
-            Student.objects.create(stu_id = new_sid,dept = new_sdept,stu_name = name,stu_email = email,stu_address = address)
+            Student.objects.create(stu_id = new_sid,dept = new_sdept,stu_name = name,stu_email = email,stu_address = address,stu_pincode = pincode,stu_dob = dob,stu_guardian_name = guardian_name)
 
             messages.success(request,"Student added successfully")
 

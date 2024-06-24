@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 {% block main %}
     <div class="container">
-        <h2 class="text-center">Student Name : {{stu_info.stu_name}} ({{stu_info.stu_id.student_id}})</h2>
-        <h4 class="text-center">Department of {{stu_info.dept.department}} ({{stu_info.dept.code}})</h4>
-        <div>
-            <b>Email ID</b> : {{stu_info.stu_email}}<br>
-            <b>Address</b> : {{stu_info.stu_address}}
+        <div class="d-flex flex-column-reverse flex-md-row justify-content-center align-items-center mb-5">
+            <div class="d-flex flex-column align-items-center align-items-md-start me-0 me-md-5">
+                <div class="fs-2 fw-semibold text-primary" style="text-shadow: 0.1px 0.1px 1px black;">Student Name : {{stu_info.stu_name}} ({{stu_info.stu_id.student_id}})</div>
+                <div class="fs-4">Department of {{stu_info.dept.department}} ({{stu_info.dept.code}})</div>
+            </div>
+            <div class="bg-info mb-3 mb-md-0">
+                <img src="" alt="This is image" height="45px">
+            </div>
+        </div>
+        <div class="container bg-light rounded-4 py-3 px-4">
+            <div class="fs-5 mb-3"><span class="fw-semibold text-primary"  style="text-shadow: 0.1px 0.1px 0.2px black;">Email ID</span>  :  {{stu_info.stu_email}}</div>
+            <div class="fs-5 mb-3"><span class="fw-semibold text-primary"  style="text-shadow: 0.1px 0.1px 0.2px black;">Address</span> : {{stu_info.stu_address}}</div>
+            <div class="fs-5 mb-3"><span class="fw-semibold text-primary"  style="text-shadow: 0.1px 0.1px 0.2px black;">Pincode</span> : {{stu_info.stu_pincode}}</div>
+            <div class="fs-5 mb-3"><span class="fw-semibold text-primary"  style="text-shadow: 0.1px 0.1px 0.2px black;">Date-of-birth</span> : {{stu_info.stu_dob}}</div>
+            <div class="fs-5 mb-3"><span class="fw-semibold text-primary"  style="text-shadow: 0.1px 0.1px 0.2px black;">Guardian's Name</span> : {{stu_info.stu_guardian_name}}</div>
         </div>
     </div>
     
